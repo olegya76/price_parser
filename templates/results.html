@@ -2,23 +2,21 @@
 {% extends "base.html" %}
     {% block body_block%}
 
-    <h2>Prise parser"</h2>
-    <h2><a href="{% url 'index' %}">Просмотр заданий</a></h2>
-    <h5>{{ request.user }}</h5>
+    <h1>Результаты поиска</h1>
 
     {% if data %}
           <table class="table table-dark">
             <thead>
               <th scope="col">Название</th>
               <th scope="col">Цена</th>
-              <th scope="col">Наличие</th>
+              <th scope="col">Сылка</th>
             </thead>
 
             {% for acc in data %}
               <tr>
-                <td>{{ acc.id }}</td>
-                <td>{{ acc.dolznost_name }}</td>
-                <td>{{ acc.oklad }}</td>
+                <td>{{ acc.name }}</td>
+                <td>{{ acc.price }}</td>
+                <td>{{ acc.link }}</td>
               </tr>
             {% endfor %}
         </table>
