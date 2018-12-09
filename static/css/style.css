@@ -1,0 +1,47 @@
+body{
+    padding: 0;
+    margin:0;
+    margin-left: 10%;
+    font-family: Arial,Helvetica,FreeSans;
+    background-color: #F0F0F0;
+}
+
+.status{
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: .5em;
+    color: #fe6600;
+}
+
+.price{
+    background: #ffce3c;
+    border: 1px solid #ffbf01;
+    margin-bottom: 7px;
+    border-radius: 4px;
+    padding: 7px 7px 5px;
+    margin-right: .5em;
+    display: inline-block;
+}
+.reviews{
+    display: inline-block;
+    font-size: .84615em;
+}
+.name{
+    font-size: 1em;
+    margin-top: .38462em;
+    margin-bottom: .76923em;
+    position: relative;
+    overflow: hidden;
+    max-height: 36px;
+}
+.item{
+    margin: 10px 5px 10px 5px;
+    background-color: #ffffff;
+    display: inline-block;
+    width: 20%;
+    padding: 10px 10px 10px 10px;
+}
+img{
+    margin-left: 15%;
+    width: 60%;
+}

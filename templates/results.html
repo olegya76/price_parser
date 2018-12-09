@@ -1,25 +1,28 @@
+
 <!DOCTYPE html>
+
 {% extends "base.html" %}
+
     {% block body_block%}
 
     <h1>Результаты поиска</h1>
 
     {% if data %}
-          <table class="table table-dark">
-            <thead>
-              <th scope="col">Название</th>
-              <th scope="col">Цена</th>
-              <th scope="col">Сылка</th>
-            </thead>
-
             {% for acc in data %}
-              <tr>
-                <td>{{ acc.name }}</td>
-                <td>{{ acc.price }}</td>
-                <td>{{ acc.link }}</td>
-              </tr>
+              <div class="item">
+                      <a href= {{ acc.link }} >
+                          <div class="img"><img src= {{ acc.src }} alt=""></div>
+                      </a>
+                      <a href= {{ acc.link }} >
+                          <div class="name">{{ acc.name }}</div>
+                      </a>
+                      <div class="status">{{ acc.status }}</div>
+                      <div class="price">{{ acc.price }}</div>
+                      <a href= {{ acc.reviewsLink }} >
+                          <div class="reviews">{{ acc.reviews }}</div>
+                      </a>
+                  </div>
             {% endfor %}
-        </table>
 
       {% else %}
       <br>
