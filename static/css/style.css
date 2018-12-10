@@ -39,9 +39,19 @@ body{
     background-color: #ffffff;
     display: inline-block;
     width: 20%;
+
     padding: 10px 10px 10px 10px;
 }
 img{
-    margin-left: 15%;
-    width: 60%;
+    height: 126px;
+    max-width: 100%;
+    /* width: 60%; */
+}
+
+.img{
+
+}
+
+.menu{
+  margin-left: -11%;
 }

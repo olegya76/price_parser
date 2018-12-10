@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+    {% block body_block%}
+
+    <h1>Поиск на розетке и фокстроте</h1>
+
+    <form method="POST">
+          {{ Form.as_p }}
+          {% csrf_token %}
+          <input type="submit" class='btn btn-primary' name="search" value="Искать">
+        </form>
+
+        {% if data %}
+                {% for acc in data %}
+                  <div class="item">
+                          <a href= {{ acc.link }} >
+                              <div class="img"><img src= {{ acc.src }} alt=""></div>
+                          </a>
+                          <a href= {{ acc.link }} >
+                              <div class="name">{{ acc.name }}</div>
+                          </a>
+                          <div class="status">{{ acc.status }}</div>
+                          <div class="price">{{ acc.price }}</div>
+                          <a href= {{ acc.reviewsLink }} >
+                              <div class="reviews">{{ acc.reviews }}</div>
+                          </a>
+                      </div>
+                {% endfor %}
+
+          {% else %}
+          <br>
+
+          {% endif %}
+
+
+    {% endblock %}

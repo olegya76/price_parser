@@ -7,6 +7,8 @@ import re
 import json
 from urllib.parse import unquote
 from . import forms
+from random import randint, shuffle
+
 
 # Create your views here.
 def index(request):
@@ -14,11 +16,32 @@ def index(request):
 
 
 def search(request):
-    list = RozetkaParser('видеокарта')
+    form = forms.SearchForm(request.POST or None)
+
+    if form.is_valid():
+        search_string = form.cleaned_data['searchField']
+        try:
+            rozetka_list = RozetkaParser( search_string )
+            list = rozetka_list
+        except:
+            list = []
+        try:
+            foxtrot_list = FoxtrotParser( search_string)
+            list = list + foxtrot_list
+        except:
+            list = list + []
+        shuffle(list)
+        print(list)
+        context = {
+            'Form' : form,
+            "data": list
+            }
+        print()
+        return render(request, 'search_main.html', context)
     context = {
-        "data": list
+        'Form' : form,
         }
-    return render(request, 'results.html', context)
+    return render(request, 'search_main.html', context)
 
 def search1(request):
     list = [{'name' : 'qwe', 'price' : 'qwe', 'eveilable' : 'True'}, {'name' : 'asd', 'price' : 'qwe', 'eveilable' : 'True'}, {'name' : 'zxc', 'price' : 'qwe', 'eveilable' : 'True'}]
@@ -33,7 +56,7 @@ def rozetka_search(request):
     if form.is_valid():
         context = {
             'Form' : form,
-            "data": RozetkaParser( form.cleaned_data['searchField'])
+            "data": RozetkaParser( form.cleaned_data['searchField']) + FoxtrotParser( form.cleaned_data['searchField'])
             }
         print()
         return render(request, 'search_in_rozetka.html', context)
@@ -58,14 +81,7 @@ def foxtrot_search(request):
 
 def RozetkaParser(searchQuery):
     url = 'https://rozetka.com.ua/search/?text='+searchQuery
-    headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-               'Accept-Encoding': 'gzip, deflate, br',
-               'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6',
-               'Connection': 'keep-alive',
-               'DNT': '1',
-               'Host': 'rozetka.com.ua',
-               'Referer': 'https://rozetka.com.ua/',
-               'Upgrade-Insecure-Requests': '1',
+    headers = {
                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'}
     r = requests.get(url, headers=headers)
 
@@ -86,9 +102,9 @@ def RozetkaParser(searchQuery):
             js = re.search('%7B\S*%7D', str(priceDiv)).group()
             js = unquote(unquote(js))
             price = json.loads(js)['price']
+            price=str(price)
         else:
-            price = priceDiv
-        price = price.text
+            price = priceDiv.text
 
         reviews = item.find(
             'span', {'class': 'g-rating-reviews'}).text
@@ -163,7 +179,7 @@ def FoxtrotParser(searchQuery):
 
         searchData.append({
             'name': name.strip(),
-            'price': price.strip(),
+            'price': price.strip() + ' грн',
             'reviews': reviews.strip(),
             'src': src.strip(),
             'link': link.strip(),
