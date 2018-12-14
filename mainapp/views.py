@@ -31,7 +31,7 @@ def search(request):
         except:
             list = list + []
         shuffle(list)
-        print(list)
+        #print(list)
         context = {
             'Form' : form,
             "data": list

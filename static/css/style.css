@@ -32,7 +32,7 @@ body{
     margin-bottom: .76923em;
     position: relative;
     overflow: hidden;
-    max-height: 36px;
+    height: 36px;
 }
 .item{
     margin: 10px 5px 10px 5px;
